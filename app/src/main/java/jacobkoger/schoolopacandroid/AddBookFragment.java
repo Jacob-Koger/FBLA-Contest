@@ -1,5 +1,6 @@
 package jacobkoger.schoolopacandroid;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -28,7 +30,7 @@ public class AddBookFragment extends Fragment {
             mCallback = (OnBookMadeListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString()
-                    + " must implemet OnBookSelectedListener");
+                    + " must implement OnBookSelectedListener");
         }
     }
 
@@ -46,10 +48,15 @@ public class AddBookFragment extends Fragment {
         bookMadeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager inputManager = (InputMethodManager)
+                        getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                inputManager.hideSoftInputFromWindow((null == getActivity().getCurrentFocus()) ?
+                        null : getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                 mCallback.onBookMade(new Book(titleEditText.getText().toString().trim(),
                         authorEditText.getText().toString().trim(),
-                        BookDatabase.getAppDatabase(view.getContext()).bookDao().getAll().size()));
+                        BookDatabase.getAppDatabase(view.getContext()).bookDao().getAll().size(),false));
             }
         });
     }
@@ -57,8 +64,6 @@ public class AddBookFragment extends Fragment {
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.button_addBook).setVisible(false);
-
     }
 
 }

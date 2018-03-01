@@ -6,12 +6,12 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Book {
-    public Book(String title, String author, int index) {
+    public Book(String title, String author, int index, boolean isCheckedOut) {
         this.title = title;
         this.author = author;
         this.index = index;
+        this.isCheckedOut = isCheckedOut;
     }
-
     public int getIndex() {
         return index;
     }
@@ -35,7 +35,13 @@ public class Book {
     public void setAuthor(String author) {
         this.author = author;
     }
+    public Boolean getCheckedOut() {
+        return isCheckedOut;
+    }
 
+    public void setCheckedOut(boolean checkedOut) {
+        isCheckedOut = checkedOut;
+    }
     @PrimaryKey
     private int index;
 
@@ -44,5 +50,8 @@ public class Book {
 
     @ColumnInfo(name = "author")
     private String author;
+
+    @ColumnInfo(name = "isCheckedOut")
+    private Boolean isCheckedOut;
 
 }

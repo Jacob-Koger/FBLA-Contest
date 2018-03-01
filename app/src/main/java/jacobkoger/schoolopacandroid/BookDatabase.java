@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Book.class}, version = 1)
+@Database(entities = {Book.class}, version = 3)
 public abstract class BookDatabase extends RoomDatabase {
 
     private static BookDatabase INSTANCE;
@@ -27,7 +27,7 @@ public abstract class BookDatabase extends RoomDatabase {
     private static BookDatabase buildDatabase(final Context context) {
         return Room.databaseBuilder(context,
                 BookDatabase.class,
-                "book-database").allowMainThreadQueries()
+                "book-database").allowMainThreadQueries().fallbackToDestructiveMigration()
                 .addCallback(new Callback() {
                     @Override
                     public void onCreate(@NonNull SupportSQLiteDatabase db) {
@@ -35,7 +35,7 @@ public abstract class BookDatabase extends RoomDatabase {
                         Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                             @Override
                             public void run() {
-                                getAppDatabase(context).bookDao().insertAll(new Book("test", "test", getAppDatabase(context).bookDao().getAll().size()));
+                                getAppDatabase(context).bookDao().insertAll(new Book("test", "test", getAppDatabase(context).bookDao().getAll().size(), false));
                             }
                         });
                     }

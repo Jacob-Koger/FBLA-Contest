@@ -23,13 +23,12 @@ public class BooksListFragment extends Fragment implements BooksListContract.Vie
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         adapter = new BookAdapter(getContext());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        adapter.notifyDataSetChanged();
-
         return inflater.inflate(R.layout.recycler_view, container, false);
     }
 
@@ -50,7 +49,5 @@ public class BooksListFragment extends Fragment implements BooksListContract.Vie
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.button_addBook).setVisible(true);
-
     }
 }

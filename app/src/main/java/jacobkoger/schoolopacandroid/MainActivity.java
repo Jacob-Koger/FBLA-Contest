@@ -15,6 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity implements AddBookFragment.OnBookMadeListener {
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements AddBookFragment.O
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
-    //private Button addBookButton;
+    private ImageButton addBookButton;
     boolean isTeacher;
     private BooksListContract.Presenter presenter;
     BooksListFragment booksListFragment = new BooksListFragment();
@@ -79,17 +81,17 @@ public class MainActivity extends AppCompatActivity implements AddBookFragment.O
             navigationView.removeHeaderView(header);
             navigationView.addHeaderView(header);
         }
-//        addBookButton = findViewById(R.id.button_addBook);
-//        addBookButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                final AddBookFragment addBookFragment = new AddBookFragment();
-//
-//                getSupportFragmentManager().beginTransaction().addToBackStack(null)
-//                        .replace(R.id.flContent, addBookFragment).commit();
-//
-//            }
-//        });
+        addBookButton = findViewById(R.id.button_addBook);
+        addBookButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AddBookFragment addBookFragment = new AddBookFragment();
+
+                getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                        .replace(R.id.flContent, addBookFragment).commit();
+
+            }
+        });
     }
 
     @Override
@@ -142,6 +144,6 @@ public class MainActivity extends AppCompatActivity implements AddBookFragment.O
     public void onBookMade(Book... books) {
         BookDatabase.getAppDatabase(this).bookDao().insertAll(books);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.flContent, booksListFragment).commit();
+                .replace(R.id.flContent, new BooksListFragment()).commit();
     }
 }
