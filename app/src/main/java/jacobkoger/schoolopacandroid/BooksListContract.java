@@ -1,8 +1,18 @@
 package jacobkoger.schoolopacandroid;
 
-/**
- * Created by Jacob Koger on 2/28/2018.
- */
+import android.support.annotation.NonNull;
+
 
 public class BooksListContract {
+
+    interface View {
+        void setPresenter(@NonNull Presenter mPresenter);
+    }
+
+    interface Presenter {
+        void onStart();
+
+        void onStop();
+    }
+
 }

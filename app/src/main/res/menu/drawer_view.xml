@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/overallgroup"
+        android:checkableBehavior="single">
+        <group android:id="@+id/group1">
+
+            <item
+                android:id="@+id/menu_nav_books"
+                android:checkable="true"
+                android:checked="true"
+                android:title="Books List" />
+            <item
+                android:id="@+id/menu_nav_addBook"
+                android:checkable="true"
+                android:checked="false"
+                android:title="Add Books" />
+        </group>
+
+    </group>
 
 </menu>
